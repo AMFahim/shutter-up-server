@@ -18,7 +18,27 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 client.connect(err => {
   const servicesCollection = client.db("shutterUp").collection("services");
+  const ordersCollection = client.db("shutterUp").collection("orders");
 
+
+  app.post ('/addOrders', (req, res) => {
+    const newOrders = req.body;
+    ordersCollection.insertOne(newOrders)
+    .then(result => {
+      res.send(result.insertedCount > 0)
+    })
+  })
+
+
+  app.get('/orders', (req, res) => {
+    ordersCollection.find()
+    .toArray((err, orders) => {
+      res.send(orders)
+    })
+  })
+
+  
+  // ------------Services-------------
 
   app.post ('/addServices', (req, res) => {
     const newEvent = req.body;
