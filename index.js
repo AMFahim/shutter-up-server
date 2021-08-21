@@ -63,9 +63,6 @@ client.connect(err => {
       res.send(result.deletedCount > 0)
     })
   })
-
-
-
 });
 
 
